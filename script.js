@@ -4,6 +4,8 @@ let operation = {
   number2: 0
 }
 
+let display = 0;
+
 function add(first, second) {
   return first + second;
 }
