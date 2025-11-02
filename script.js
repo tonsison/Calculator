@@ -8,7 +8,7 @@ let display = "";
 let operation = {
   number1: 0,
   sign: '',
-  number2: 0
+  number2: 1
 }
 
 function change_display (operation) {
@@ -20,6 +20,8 @@ function change_display (operation) {
       if (this.id === "operation") {
         operation.sign = temp_display;
         operation.number1 = Number(display);
+        display = "";
+        temp_display = "";
       }
 
       else if (this.id === "clear") {
@@ -27,9 +29,12 @@ function change_display (operation) {
         operation.number1 = 0;
         operation.number2 = 0;
         display = "";
+        temp_display = "";
       }
 
       else if (this.id === "equals") {
+        operation.number2 = Number(display);
+        temp_display = "";
         display = operate(operation);
       }
 
@@ -64,7 +69,7 @@ function operate (equation){
   else if (equation.sign === '-') {
     return subtract(equation.number1, equation.number2);
   }
-  else if (equation.sign === '*') {
+  else if (equation.sign === 'x') {
     return multiply(equation.number1, equation.number2);
   }
   else if (equation.sign === '/') {
