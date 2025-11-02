@@ -1,8 +1,9 @@
 const buttons = document.getElementsByTagName("button");
-const buttontxt = buttons.innerText || buttons.TextContent;
 const output = document.getElementById("display");
+const operator = document.getElementById("operation");
+const equal = document.getElementById("equals");
 
-let display = "0";
+let display = "";
 
 let operation = {
   number1: 0,
@@ -10,13 +11,35 @@ let operation = {
   number2: 0
 }
 
-function change_display () {
-  buttons.addEventListener("mouseclick", () => {
-    output.innerHTML = display;
-  })
+function change_display (operation) {
+  for (let button of buttons) {
+    button.addEventListener("click", function() {
+      const buttonText = button.innerText || button.textContent;
+      temp_display = buttonText;
+
+      if (this.id === "operation") {
+        operation.sign = temp_display;
+        operation.number1 = Number(display);
+      }
+
+      else if (this.id === "clear") {
+        operation.sign = "";
+        operation.number1 = 0;
+        operation.number2 = 0;
+        display = "";
+      }
+
+      else if (this.id === "equals") {
+        display = operate(operation);
+      }
+
+      display = display + temp_display;
+      output.innerHTML = display;
+    });
+  }
 }
 
-change_display();
+change_display(operation);
 
 function add(first, second) {
   return first + second;
