@@ -26,15 +26,15 @@ function change_display (operation) {
         operation.number1 = 0;
         operation.number2 = 0;
         display = "";
-        temp_display = "";
         second = "";
         result.innerHTML = "";
         answer_given = false;
       }
 
       if (this.id === "operation") {
-        operation.sign = temp_display;
         operation.number1 = Number(display);
+        operation.sign = temp_display;
+        temp_display = "";
         second = "";
       }
 
