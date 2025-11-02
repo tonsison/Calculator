@@ -1,14 +1,18 @@
 const buttons = document.getElementsByTagName("button");
 const output = document.getElementById("display");
+const result = document.getElementById("outputs");
 const operator = document.getElementById("operation");
 const equal = document.getElementById("equals");
 
 let display = "";
+let second = "";
+let final_answer = "";
+let answer_given = false;
 
 let operation = {
   number1: 0,
   sign: '',
-  number2: 1
+  number2: 0
 }
 
 function change_display (operation) {
@@ -17,11 +21,21 @@ function change_display (operation) {
       const buttonText = button.innerText || button.textContent;
       temp_display = buttonText;
 
+      if (answer_given === true) {
+        operation.sign = "";
+        operation.number1 = 0;
+        operation.number2 = 0;
+        display = "";
+        temp_display = "";
+        second = "";
+        result.innerHTML = "";
+        answer_given = false;
+      }
+
       if (this.id === "operation") {
         operation.sign = temp_display;
         operation.number1 = Number(display);
-        display = "";
-        temp_display = "";
+        second = "";
       }
 
       else if (this.id === "clear") {
@@ -30,21 +44,24 @@ function change_display (operation) {
         operation.number2 = 0;
         display = "";
         temp_display = "";
+        final_answer = "";
+        result.innerHTML = "";
+        second = "";
       }
 
       else if (this.id === "equals") {
-        operation.number2 = Number(display);
-        temp_display = "";
-        display = operate(operation);
+        operation.number2 = Number(second);
+        final_answer = operate(operation);
+        result.innerHTML = final_answer;
+        answer_given = true;
       }
 
+      second = second + temp_display;
       display = display + temp_display;
       output.innerHTML = display;
     });
   }
 }
-
-change_display(operation);
 
 function add(first, second) {
   return first + second;
@@ -76,3 +93,5 @@ function operate (equation){
     return divide (equation.number1, equation.number2);
   }
 }
+
+change_display(operation);
