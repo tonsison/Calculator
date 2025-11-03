@@ -8,6 +8,7 @@ let display = "";
 let second = "";
 let final_answer = "";
 let answer_given = false;
+let first_operation = true;
 
 let operation = {
   number1: 0,
@@ -33,10 +34,20 @@ function change_display (operation) {
       }
 
       if (this.id === "operation") {
-        operation.number1 = Number(display);
-        operation.sign = temp_display;
-        second = "";
-      }
+        if (first_operation === true) {
+          operation.number1 = Number(display);
+          operation.sign = temp_display;
+          second = "";
+          first_operation = false;
+        }
+        else {
+          operation.number2 = Number(second.replace(temp_display,""));
+          final_answer = operate(operation);
+          result.innerHTML = Math.round(final_answer * 100) / 100;
+          operation.number1 = final_answer;
+          second = "";
+        }
+      } 
 
       else if (this.id === "clear") {
         operation.sign = "";
@@ -47,13 +58,15 @@ function change_display (operation) {
         final_answer = "";
         result.innerHTML = "";
         second = "";
+        first_operation = true;
       }
 
       else if (this.id === "equals") {
-        operation.number2 = Number(second.replace("=",""));
+        operation.number2 = Number(second.replace(temp_display,""));
         final_answer = operate(operation);
-        result.innerHTML = final_answer;
+        result.innerHTML = Math.round(final_answer * 100) / 100;
         answer_given = true;
+        first_operation = true;
       }
 
       display = display + temp_display;
