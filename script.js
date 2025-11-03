@@ -20,6 +20,7 @@ function change_display (operation) {
     button.addEventListener("click", function() {
       const buttonText = button.innerText || button.textContent;
       temp_display = buttonText;
+      second = second + temp_display;
 
       if (answer_given === true) {
         operation.sign = "";
@@ -34,7 +35,6 @@ function change_display (operation) {
       if (this.id === "operation") {
         operation.number1 = Number(display);
         operation.sign = temp_display;
-        temp_display = "";
         second = "";
       }
 
@@ -50,13 +50,12 @@ function change_display (operation) {
       }
 
       else if (this.id === "equals") {
-        operation.number2 = Number(second);
+        operation.number2 = Number(second.replace("=",""));
         final_answer = operate(operation);
         result.innerHTML = final_answer;
         answer_given = true;
       }
 
-      second = second + temp_display;
       display = display + temp_display;
       output.innerHTML = display;
     });
