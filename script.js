@@ -43,6 +43,7 @@ function change_display (operation) {
         else {
           operation.number2 = Number(second.replace(temp_display,""));
           final_answer = operate(operation);
+          operation.sign = temp_display;
           result.innerHTML = Math.round(final_answer * 100) / 100;
           operation.number1 = final_answer;
           second = "";
